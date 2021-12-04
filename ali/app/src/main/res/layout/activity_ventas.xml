@@ -9,24 +9,120 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@drawable/line" />
+        android:background="@drawable/line">
 
-    <TextView
-        android:layout_width="135dp"
-        android:layout_height="45dp"
-        android:layout_centerHorizontal="true"
-        android:fontFamily="@font/roboto_bold"
-        android:text="CUENTAS"
-        android:textColor="#F5649D"
-        android:textSize="30sp">
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="45dp"
+            android:fontFamily="@font/comfortaa_bold"
+            android:text="CUENTAS"
+            android:textColor="#000000"
+            android:textSize="15sp">
 
-    </TextView>
+        </TextView>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="650dp"
-        android:layout_centerVertical="true">
+        android:layout_height="850dp"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="90dp">
 
+        <LinearLayout
+            android:layout_width="410dp"
+            android:layout_height="150dp"
+            android:background="@drawable/filtro">
+
+            <Spinner
+                android:id="@+id/spn_proveedor"
+                android:layout_width="150dp"
+                android:layout_height="32dp"
+                android:layout_marginLeft="135dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/radius_contorno" />
+
+            <Button
+                android:id="@+id/btnfecha_i"
+                android:layout_width="36dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="-210dp"
+                android:layout_marginTop="40dp"
+                android:background="@android:color/transparent"
+                android:drawableBottom="@drawable/calendar" />
+
+            <TextView
+                android:id="@+id/tvfecha_i"
+                android:layout_width="100dp"
+                android:layout_height="32dp"
+                android:layout_marginTop="56dp"
+                android:fontFamily="@font/lato_black"
+                android:text="00/00/0000"
+                android:textSize="14sp"></TextView>
+
+            <Button
+                android:id="@+id/btnfecha_f"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:layout_marginLeft="23dp"
+                android:layout_marginTop="40dp"
+                android:background="@android:color/transparent"
+                android:drawableBottom="@drawable/calendar" />
+
+            <Button
+                android:id="@+id/btnfiltrar"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="-145dp"
+                android:layout_marginTop="95dp"
+                android:layout_marginRight="125dp"
+                android:background="@drawable/btnradius"
+                android:text="FILTRAR"
+                android:textColor="#FFFFFF" />
+
+            <TextView
+                android:id="@+id/tvfecha_f"
+                android:layout_width="100dp"
+                android:layout_height="32dp"
+                android:layout_marginLeft="-130dp"
+                android:layout_marginTop="57dp"
+                android:fontFamily="@font/lato_black"
+                android:text="00/00/0000"
+                android:textSize="14sp"></TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="410dp"
+            android:layout_height="75dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="-410dp"
+            android:layout_marginTop="625dp"
+            android:layout_marginRight="-410dp"
+
+            android:background="@drawable/total">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="80dp"
+                android:fontFamily="@font/lato_black"
+                android:text="TOTAL"
+                android:textColor="#000000"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tvtotal"
+                android:layout_width="64dp"
+                android:layout_height="32dp"
+                android:layout_marginLeft="175dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="80dp"
+                android:fontFamily="@font/lato_black"
+                android:text="$ 0.00"
+                android:textColor="#11EF1A"
+                android:textSize="15sp" />
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -39,29 +135,22 @@
         android:background="@drawable/line_sup">
 
         <Button
-            android:id="@+id/btnpesas"
+            android:id="@+id/btnproveedor"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_marginLeft="75dp"
+            android:layout_marginLeft="110dp"
+            android:layout_marginRight="110dp"
             android:background="@android:color/transparent"
-            android:drawableBottom="@drawable/bascula"></Button>
+            android:drawableBottom="@drawable/user"></Button>
 
         <Button
             android:id="@+id/btncuentas"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_marginLeft="75dp"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
             android:background="@android:color/transparent"
             android:drawableBottom="@drawable/coin"></Button>
-
-        <Button
-            android:id="@+id/btnproveedor"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_marginLeft="75dp"
-            android:background="@android:color/transparent"
-            android:drawableBottom="@drawable/user"
-            android:gravity="center"></Button>
     </LinearLayout>
 
 </RelativeLayout>
