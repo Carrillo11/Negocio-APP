@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class Proveedores extends AppCompatActivity {
-    private Button btnagregar_A, btnagregar_N, btnCuentas;
+    TextView tvnombre_A, tvnombre_N;
+    Button btnagregar_A, btnagregar_N, btnCuentas;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +31,7 @@ public class Proveedores extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Inicio.class);
+                intent.putExtra("dato", tvnombre_A.getText().toString());
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivityForResult(intent, 0);
                 overridePendingTransition(0,0);
@@ -40,6 +43,7 @@ public class Proveedores extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Inicio.class);
+                intent.putExtra("dato", tvnombre_N.getText().toString());
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivityForResult(intent, 0);
                 overridePendingTransition(0,0);
@@ -58,8 +62,11 @@ public class Proveedores extends AppCompatActivity {
             }
         });
 
+
     }
     private void initializeUI() {
+        tvnombre_A = findViewById(R.id.tvnombre_a);
+        tvnombre_N = findViewById(R.id.tvnombre_n);
         btnCuentas=findViewById(R.id.btncuentas);
         btnagregar_A=findViewById(R.id.btnagregar_a);
         btnagregar_N=findViewById(R.id.btnagregar_n);

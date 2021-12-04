@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1065526842234",
+    "project_id": "negocio-ali",
+    "storage_bucket": "negocio-ali.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1065526842234:android:2a61cf1cee164f4d5bbcc3",
+        "android_client_info": {
+          "package_name": "com.rc.ali"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1065526842234-b9kqkfb4c6amrnt6qv056evsa7uq97ot.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rc.ali",
+            "certificate_hash": "dbe7c84061a7ae13e7bb96937822abbac4c536d8"
+          }
+        },
+        {
+          "client_id": "1065526842234-qb3tt572ql11g8ue6eiisptrosmg0q04.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBe4WJFqkH8JdYl7n4x6kaGE3tyP4JWuBE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1065526842234-qb3tt572ql11g8ue6eiisptrosmg0q04.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

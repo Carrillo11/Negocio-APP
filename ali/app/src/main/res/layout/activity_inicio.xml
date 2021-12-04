@@ -29,37 +29,65 @@
         android:layout_centerVertical="true"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/tvproveedor"
+            android:layout_width="150dp"
+            android:layout_height="36dp"
+            android:layout_marginLeft="125dp"
+            android:layout_marginTop="150dp"
+            android:layout_marginRight="125dp"
+            android:background="@drawable/radius_contorno"
+            android:fontFamily="@font/lato"
+            android:textColor="#000000" />
 
         <Spinner
             android:id="@+id/spn_producto"
             android:layout_width="150dp"
-            android:layout_height="32dp"
+            android:layout_height="36dp"
             android:layout_marginLeft="125dp"
-            android:layout_marginTop="180dp"
+            android:layout_marginTop="25dp"
             android:layout_marginRight="125dp"
-            android:background="@drawable/radius_contorno" />
+            android:background="@drawable/radius_contorno"
+            android:fontFamily="@font/lato" />
 
         <EditText
             android:id="@+id/et_cantidad"
             android:layout_width="150dp"
-            android:layout_height="32dp"
+            android:layout_height="36dp"
             android:layout_marginLeft="125dp"
             android:layout_marginTop="25dp"
             android:layout_marginRight="125dp"
             android:background="@drawable/radius_contorno"
-            android:ems="10"
+            android:fontFamily="@font/lato"
+            android:hint="LIBRAS"
             android:inputType="number" />
 
-        <EditText
-            android:id="@+id/et_fecha"
-            android:layout_width="150dp"
-            android:layout_height="32dp"
-            android:layout_marginLeft="125dp"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
             android:layout_marginTop="25dp"
-            android:layout_marginRight="125dp"
-            android:background="@drawable/radius_contorno"
-            android:ems="10"
-            android:inputType="date" />
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnfecha"
+                android:layout_width="36dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="80dp"
+                android:layout_marginRight="10dp"
+                android:background="@android:color/transparent"
+                android:drawableBottom="@drawable/calendar"
+                android:fontFamily="@font/lato" />
+
+            <TextView
+                android:id="@+id/tv_fecha"
+                android:layout_width="150dp"
+                android:layout_height="36dp"
+                android:background="@drawable/radius_contorno"
+                android:fontFamily="@font/lato"
+                android:textColor="#000000"
+                android:textSize="15sp" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/button"
@@ -81,7 +109,6 @@
             android:layout_marginRight="168dp"
             android:background="@android:color/transparent"
             android:drawableBottom="@drawable/x" />
-
 
     </LinearLayout>
 

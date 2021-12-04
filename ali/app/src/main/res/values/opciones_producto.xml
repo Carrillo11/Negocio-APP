@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="comobo_proveedor" >
+    <string-array name="comobo_productos" >
         <item>
-            SELECCIONE
+            Seleccione
         </item>
         <item>
-            ANDRES
+            HUESO
         </item>
         <item>
-            NELSON
+            MENUDO
         </item>
     </string-array>
 </resources>

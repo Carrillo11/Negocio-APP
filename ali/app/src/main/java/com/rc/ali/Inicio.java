@@ -2,19 +2,56 @@ package com.rc.ali;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+import java.util.Calendar;
 
 public class Inicio extends AppCompatActivity {
-    private Button  btnSalir, btnEnviar;
+    TextView tvProveedor, tvFecha;
+    Spinner  comboProducto;
+    EditText etCantidad;
+    Button  btnSalir, btnFecha, btnEnviar;
+    String dato;
+    int cyear, cday, cmonth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio);
         initializeUI();
+
+        ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(this,R.array.comobo_productos, android.R.layout.simple_spinner_item);
+        comboProducto.setAdapter(adapter);
+
+        dato = getIntent().getStringExtra("dato");
+        tvProveedor.setText(dato);
+
+
+        btnFecha.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                final Calendar calendar=Calendar.getInstance();
+                cyear = calendar.get(Calendar.YEAR);
+                cmonth = calendar.get(Calendar.MONTH);
+                cday = calendar.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(Inicio.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        tvFecha.setText(dayOfMonth+"/"+(month+1)+"/"+year);
+                    }
+                },cyear,cmonth,cday);
+                datePickerDialog.show();
+            }
+        });
 
         btnSalir.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -31,7 +68,11 @@ public class Inicio extends AppCompatActivity {
     }
 
     private void initializeUI() {
-       btnSalir=findViewById(R.id.btnsalir);
-
+       tvProveedor = findViewById(R.id.tvproveedor);
+       comboProducto = findViewById(R.id.spn_producto);
+       etCantidad = findViewById(R.id.et_cantidad);
+       tvFecha = findViewById(R.id.tv_fecha);
+       btnFecha = findViewById(R.id.btnfecha);
+       btnSalir = findViewById(R.id.btnsalir);
     }
 }
