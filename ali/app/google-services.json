@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "1065526842234",
+    "firebase_url": "https://negocio-ali-default-rtdb.firebaseio.com",
     "project_id": "negocio-ali",
     "storage_bucket": "negocio-ali.appspot.com"
   },

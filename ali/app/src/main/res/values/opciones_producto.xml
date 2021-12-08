@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="comobo_productos" >
-        <item>
-            Seleccione
+         <item>
+            SELECCIONE
         </item>
         <item>
             HUESO
         </item>
         <item>
             MENUDO
+        </item>
+        <item>
+            PELLEJO
         </item>
     </string-array>
 </resources>

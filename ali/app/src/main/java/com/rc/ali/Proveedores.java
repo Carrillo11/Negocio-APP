@@ -31,6 +31,7 @@ public class Proveedores extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Inicio.class);
+                intent.putExtra("accion","a"); // Agregar
                 intent.putExtra("dato", tvnombre_A.getText().toString());
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivityForResult(intent, 0);
@@ -43,6 +44,7 @@ public class Proveedores extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Inicio.class);
+                intent.putExtra("accion","a");
                 intent.putExtra("dato", tvnombre_N.getText().toString());
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivityForResult(intent, 0);

@@ -12,29 +12,45 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.sql.Time;
+import java.sql.Timestamp;
+
+import com.google.firebase.FirebaseApp;
+import com.rc.ali.Modelo.Pesa;
+
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.TimeZone;
+import java.util.UUID;
 
 public class Inicio extends AppCompatActivity {
-    TextView tvProveedor, tvFecha;
+    TextView tvProveedor, tvFecha, tvTimestamp;
     Spinner  comboProducto;
     EditText etCantidad;
     Button  btnSalir, btnFecha, btnEnviar;
     String dato;
+    String key="",proveedor="",producto="",cantidad="",fecha="",timestamp="", accion="";
+    Timestamp  tiempo;
+    long timeunix;
     int cyear, cday, cmonth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio);
         initializeUI();
+        inicializar();
 
         ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(this,R.array.comobo_productos, android.R.layout.simple_spinner_item);
         comboProducto.setAdapter(adapter);
 
-        dato = getIntent().getStringExtra("dato");
-        tvProveedor.setText(dato);
-
+        if (accion.equals("a")) { //Agregar usando push()
+            dato = getIntent().getStringExtra("dato");
+            tvProveedor.setText(dato);
+        }
 
         btnFecha.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -46,7 +62,11 @@ public class Inicio extends AppCompatActivity {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(Inicio.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        tvFecha.setText(dayOfMonth+"/"+(month+1)+"/"+year);
+                        tvFecha.setText(year+"-"+(month+1)+"-"+dayOfMonth+" "+"00:00:00.0");
+                        tiempo = Timestamp.valueOf(year+"-"+(month+1)+"-"+dayOfMonth+" "+"00:00:00.0");
+                        timeunix = -tiempo.getTime();
+
+                        tvTimestamp.setText(String.valueOf(timeunix));
                     }
                 },cyear,cmonth,cday);
                 datePickerDialog.show();
@@ -64,7 +84,47 @@ public class Inicio extends AppCompatActivity {
             }
         });
 
+    }
 
+    private void inicializar() {
+        Bundle datos = getIntent().getExtras();
+        key = datos.getString("key");
+        proveedor = datos.getString("proveedor");
+        producto=datos.getString("producto");
+        cantidad=datos.getString("cantidad");
+        fecha=datos.getString("fecha");
+        timestamp = datos.getString("timestamp");
+
+
+        accion=datos.getString("accion");
+        tvProveedor.setText(proveedor);
+       //comboProducto.setAdapter(adapter);
+        etCantidad.setText(cantidad);
+        tvFecha.setText(fecha);
+        tvTimestamp.setText(timestamp);
+    }
+
+    public void guardar(View v){
+        String proveedor = tvProveedor.getText().toString();
+        String producto = comboProducto.getSelectedItem().toString();
+        String cantidad = etCantidad.getText().toString();
+        String fecha = tvFecha.getText().toString();
+        String timestamp = tvTimestamp.getText().toString();
+        String proveedor_timestamp = proveedor+"_"+timestamp;
+
+        // Se forma objeto Detalle
+        Pesa pesa = new Pesa(proveedor,producto,cantidad,fecha, timestamp, proveedor_timestamp);
+
+        if (accion.equals("a")) { //Agregar usando push()
+            Ventas.refDetalle.push().setValue(pesa);
+            Toast.makeText(getApplicationContext(), "Pesa ingresada.", Toast.LENGTH_LONG).show();
+        }
+        else // Editar usando setValue
+        {
+            Ventas.refDetalle.child(key).setValue(pesa);
+            Toast.makeText(getApplicationContext(), "Pesa modificada.", Toast.LENGTH_LONG).show();
+        }
+        finish();
     }
 
     private void initializeUI() {
@@ -72,7 +132,9 @@ public class Inicio extends AppCompatActivity {
        comboProducto = findViewById(R.id.spn_producto);
        etCantidad = findViewById(R.id.et_cantidad);
        tvFecha = findViewById(R.id.tv_fecha);
+       tvTimestamp = findViewById(R.id.tv_timestamp);
        btnFecha = findViewById(R.id.btnfecha);
+       btnEnviar= findViewById(R.id.btnenviar);
        btnSalir = findViewById(R.id.btnsalir);
     }
 }
