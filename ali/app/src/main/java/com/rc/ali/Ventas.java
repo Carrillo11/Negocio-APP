@@ -30,27 +30,33 @@ import com.google.firebase.database.ValueEventListener;
 import com.rc.ali.Adaptador.AdaptadorPesa;
 import com.rc.ali.Modelo.Pesa;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.sql.Timestamp;
 
 public class Ventas extends AppCompatActivity {
-    TextView tvFecha_I, tvFecha_F;
+    TextView tvFecha_I, tvFecha_F, tvPrecio, tvTotal;
     Button btnFecha_I, btnFecha_F, btnProveedores, btnFiltro;
     Spinner comboProveedor;
     Timestamp  tiempo_i, tiempo_f;
-    String tmp_i, tmp_f, tmp_is, tmp_fs;
+    String tmp_i, tmp_f;
     long timeunix_i, timeunix_f;
     int cyear, cday, cmonth;
+    int i;
+    double preciounit;
+    double[] precio;
+    double preciofinal;
+
+
 
     public static FirebaseDatabase database = FirebaseDatabase.getInstance();
     public static DatabaseReference refDetalle = database.getReference("pesa");
 
     Query consultaOrdenada = refDetalle.orderByChild("timestamp");
-    Query filtrarNombreA = refDetalle.orderByChild("proveedor").equalTo("ANDRES");
-
-    Query filtrarNombreN = refDetalle.orderByChild("proveedor").equalTo("NELSON");
 
     List<Pesa> pesas;
     ListView listaDestinos;
@@ -62,7 +68,6 @@ public class Ventas extends AppCompatActivity {
 
         initializeUI();
         inicializar();
-
 
         btnProveedores.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,48 +120,40 @@ public class Ventas extends AppCompatActivity {
         });
         btnFiltro.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
-                /*filtrarNombreA.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        // Procedimiento que se ejecuta cuando hubo algun cambio
-                        // en la base de datos
-                        // Se actualiza la coleccion de personas
-                        pesas.removeAll(pesas);
-                        for (DataSnapshot dato : dataSnapshot.getChildren()) {
-                            Pesa pesa = dato.getValue(Pesa.class);
-                            pesa.setKey(dato.getKey());
-                            pesas.add(pesa);
-                        }
-
-                        AdaptadorPesa adapter = new AdaptadorPesa(Ventas.this,
-                                pesas);
-                        listaDestinos.setAdapter(adapter);
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });*/
-
+                if(tvFecha_I.getText().toString().equals("") || tvFecha_F.getText().toString().equals("") || comboProveedor.getSelectedItem().toString().equals("SELECCIONE")){
+                    Toast.makeText(Ventas.this,
+                            "Por favor ingrese todos los campos necesarios.",Toast.LENGTH_SHORT).show();
+                }
+                else{
                 refDetalle.orderByChild("proveedor_timestamp").startAt(comboProveedor.getSelectedItem().toString()+"_"+tmp_i).endAt(comboProveedor.getSelectedItem().toString()+"_"+tmp_f).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         // Procedimiento que se ejecuta cuando hubo algun cambio
                         // en la base de datos
                         // Se actualiza la coleccion de personas
-                        pesas.removeAll(pesas);
 
+                        pesas.removeAll(pesas);
                         for (DataSnapshot dato : dataSnapshot.getChildren()) {
                             Pesa pesa = dato.getValue(Pesa.class);
                             pesa.setKey(dato.getKey());
                             pesas.add(pesa);
+                            int tot = listaDestinos.getAdapter().getCount();
+                            precio = new double[tot];
+                            preciounit = Double.parseDouble(pesa.getPrecio());
+                            precio[i] = preciounit;
+                            preciofinal+=precio[i];
+                            i+=1;
                         }
 
-                        AdaptadorPesa adapter = new AdaptadorPesa(Ventas.this,
-                                pesas);
+                        AdaptadorPesa adapter = new AdaptadorPesa(Ventas.this,pesas);
                         listaDestinos.setAdapter(adapter);
+
+                        tvTotal.setText(String.valueOf(preciofinal));
+
+                        precio = new double[0];
+                        i=0;
+                        preciofinal=0;
+
                     }
 
                     @Override
@@ -164,29 +161,7 @@ public class Ventas extends AppCompatActivity {
 
                     }
                 });
-           /*     filtrarNombreN.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        // Procedimiento que se ejecuta cuando hubo algun cambio
-                        // en la base de datos
-                        // Se actualiza la coleccion de personas
-                        pesas.removeAll(pesas);
-                        for (DataSnapshot dato : dataSnapshot.getChildren()) {
-                            Pesa pesa = dato.getValue(Pesa.class);
-                            pesa.setKey(dato.getKey());
-                            pesas.add(pesa);
-                        }
-
-                        AdaptadorPesa adapter = new AdaptadorPesa(Ventas.this,
-                                pesas);
-                        listaDestinos.setAdapter(adapter);
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });*/
+                }
             }
         });
 
@@ -254,16 +229,19 @@ public class Ventas extends AppCompatActivity {
                 // en la base de datos
                 // Se actualiza la coleccion de personas
                 pesas.removeAll(pesas);
-                for (DataSnapshot dato : dataSnapshot.getChildren()) {
-                    Pesa pesa = dato.getValue(Pesa.class);
-                    pesa.setKey(dato.getKey());
-                    pesas.add(pesa);
-                }
 
-                AdaptadorPesa adapter = new AdaptadorPesa(Ventas.this,
-                        pesas);
+                    for (DataSnapshot dato : dataSnapshot.getChildren()) {
+                        Pesa pesa = dato.getValue(Pesa.class);
+                        pesa.setKey(dato.getKey());
+                        //preciounit = Integer.parseInt(pesa.getPrecio());
+                        //precio[i] = "Hola";
+                        pesas.add(pesa);
+                        System.out.println(preciounit);
+                       // i=+1;
+                    }
+
+                AdaptadorPesa adapter = new AdaptadorPesa(Ventas.this, pesas);
                 listaDestinos.setAdapter(adapter);
-
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -278,6 +256,8 @@ public class Ventas extends AppCompatActivity {
         btnFiltro = findViewById(R.id.btnfiltrar);
         tvFecha_I = findViewById(R.id.tvfecha_i);
         tvFecha_F = findViewById(R.id.tvfecha_f);
+        tvPrecio = findViewById(R.id.tvpreciounit);
+        tvTotal = findViewById(R.id.tvtotal);
         comboProveedor = findViewById(R.id.spn_proveedor);
        // btnPesas = findViewById(R.id.btnpesas);
     }

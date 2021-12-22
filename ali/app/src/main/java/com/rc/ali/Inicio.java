@@ -33,6 +33,7 @@ public class Inicio extends AppCompatActivity {
     String dato;
     String key="",proveedor="",producto="",cantidad="",fecha="",timestamp="", accion="";
     Timestamp  tiempo;
+    double valor;
     long timeunix;
     int cyear, cday, cmonth;
 
@@ -43,9 +44,9 @@ public class Inicio extends AppCompatActivity {
         setContentView(R.layout.activity_inicio);
         initializeUI();
         inicializar();
-
         ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(this,R.array.comobo_productos, android.R.layout.simple_spinner_item);
         comboProducto.setAdapter(adapter);
+
 
         if (accion.equals("a")) { //Agregar usando push()
             dato = getIntent().getStringExtra("dato");
@@ -85,7 +86,25 @@ public class Inicio extends AppCompatActivity {
         });
 
     }
-
+    private void valor(){
+        if(tvProveedor.getText().toString().equals("ANDRES")){
+            if (comboProducto.getSelectedItem().toString().equals("HUESO")){
+                valor = 0.75;
+            }else if(comboProducto.getSelectedItem().toString().equals("MENUDO")){
+                valor = 0.5;
+            }else if(comboProducto.getSelectedItem().toString().equals("PELLEJO")){
+                valor = 0.7;
+            }
+        }else if(tvProveedor.getText().toString().equals("NELSON")){
+            if (comboProducto.getSelectedItem().toString().equals("HUESO")){
+                valor = 0.6;
+            }else if(comboProducto.getSelectedItem().toString().equals("MENUDO")){
+                valor = 0.4;
+            }else if(comboProducto.getSelectedItem().toString().equals("PELLEJO")){
+                valor = 0.9;
+            }
+        }
+    }
     private void inicializar() {
         Bundle datos = getIntent().getExtras();
         key = datos.getString("key");
@@ -98,22 +117,31 @@ public class Inicio extends AppCompatActivity {
 
         accion=datos.getString("accion");
         tvProveedor.setText(proveedor);
-       //comboProducto.setAdapter(adapter);
+       comboProducto.setSelection(0);
         etCantidad.setText(cantidad);
         tvFecha.setText(fecha);
         tvTimestamp.setText(timestamp);
     }
 
-    public void guardar(View v){
-        String proveedor = tvProveedor.getText().toString();
-        String producto = comboProducto.getSelectedItem().toString();
-        String cantidad = etCantidad.getText().toString();
-        String fecha = tvFecha.getText().toString();
-        String timestamp = tvTimestamp.getText().toString();
-        String proveedor_timestamp = proveedor+"_"+timestamp;
+    public void guardar(View v) {
+
+        if(tvProveedor.getText().toString().equals("") || comboProducto.getSelectedItem().toString().equals("SELECCIONE") || tvFecha.getText().toString().equals("") ||
+           tvTimestamp.getText().toString().equals("") || etCantidad.getText().toString().equals("")){
+            Toast.makeText(Inicio.this,
+                    "Por favor ingrese todos los campos necesarios.",Toast.LENGTH_SHORT).show();
+        }
+        else{
+            String proveedor = tvProveedor.getText().toString();
+            String producto = comboProducto.getSelectedItem().toString();
+            String cantidad = etCantidad.getText().toString();
+            String fecha = tvFecha.getText().toString();
+            String timestamp = tvTimestamp.getText().toString();
+            String proveedor_timestamp = proveedor + "_" + timestamp;
+            valor();
+            String precio = String.format("%.2f",Double.parseDouble(cantidad) * valor);
 
         // Se forma objeto Detalle
-        Pesa pesa = new Pesa(proveedor,producto,cantidad,fecha, timestamp, proveedor_timestamp);
+        Pesa pesa = new Pesa(proveedor,producto,cantidad,fecha,timestamp,proveedor_timestamp,precio);
 
         if (accion.equals("a")) { //Agregar usando push()
             Ventas.refDetalle.push().setValue(pesa);
@@ -125,6 +153,7 @@ public class Inicio extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Pesa modificada.", Toast.LENGTH_LONG).show();
         }
         finish();
+        }
     }
 
     private void initializeUI() {

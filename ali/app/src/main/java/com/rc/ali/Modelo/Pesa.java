@@ -5,6 +5,7 @@ public class Pesa {
     private String producto;
     private String cantidad;
     private String fecha;
+    private String precio;
     private String timestamp;
     private String proveedor_timestamp;
     String key;
@@ -13,13 +14,15 @@ public class Pesa {
     }
 
 
-    public Pesa(String proveedor, String producto, String cantidad, String fecha, String timestamp, String proveedor_timestamp){
+    public Pesa(String proveedor, String producto, String cantidad, String fecha, String timestamp, String proveedor_timestamp, String precio){
         this.proveedor = proveedor;
         this.producto = producto;
         this.cantidad = cantidad;
-        this.fecha= fecha;
+        this.fecha = fecha;
+        this.precio = precio;
         this.timestamp = timestamp;
         this.proveedor_timestamp = proveedor_timestamp;
+
     }
 
     public String getProveedor(){
@@ -60,6 +63,8 @@ public class Pesa {
     public void setTimestamp(String timestamp) { this.timestamp = timestamp; }
     //
     public String getProveedor_timestamp() { return proveedor_timestamp; }
-
     public void setProveedor_timestamp(String proveedor_timestamp) { this.proveedor_timestamp = proveedor_timestamp; }
+    //
+    public String getPrecio() { return precio; }
+    public void setPrecio(String precio) { this.precio = precio; }
 }
