@@ -20,8 +20,10 @@ import java.sql.Timestamp;
 import com.google.firebase.FirebaseApp;
 import com.rc.ali.Modelo.Pesa;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.TimeZone;
 import java.util.UUID;
 
@@ -141,6 +143,24 @@ public class Inicio extends AppCompatActivity {
             String precio = String.format("%.2f",Double.parseDouble(cantidad) * valor);
 
         // Se forma objeto Detalle
+            String date_s = fecha;
+            SimpleDateFormat dt = new SimpleDateFormat("yyyyy-MM-dd hh:mm:ss");
+            Date date = null;
+            try {
+                date = dt.parse(date_s);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            SimpleDateFormat dt1 = new SimpleDateFormat("E dd/MMM/yy");
+
+            Intent compartir = new Intent(android.content.Intent.ACTION_SEND);
+            compartir.setType("text/plain");
+            String mensaje = "La cuenta de "+ producto + " del día "+ dt1.format(date) + " fue de "+ cantidad+" lb.";
+            compartir.putExtra(android.content.Intent.EXTRA_SUBJECT, "Empleos Baja App");
+            compartir.putExtra(android.content.Intent.EXTRA_TEXT, mensaje);
+            startActivity(Intent.createChooser(compartir, "Compartir vía"));
+
+
         Pesa pesa = new Pesa(proveedor,producto,cantidad,fecha,timestamp,proveedor_timestamp,precio);
 
         if (accion.equals("a")) { //Agregar usando push()
