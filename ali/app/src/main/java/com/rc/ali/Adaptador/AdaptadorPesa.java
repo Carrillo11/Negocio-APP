@@ -57,7 +57,7 @@ public class AdaptadorPesa extends ArrayAdapter<Pesa> {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        SimpleDateFormat dt1 = new SimpleDateFormat("E dd-MMM-yy");
+        SimpleDateFormat dt1 = new SimpleDateFormat("E dd/MMM/yy");
 
         tvProveedor.setText(pesas.get(position).getProveedor());
         tvProducto.setText(pesas.get(position).getProducto());

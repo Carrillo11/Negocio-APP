@@ -31,7 +31,7 @@ public class Inicio extends AppCompatActivity {
     TextView tvProveedor, tvFecha, tvTimestamp;
     Spinner  comboProducto;
     EditText etCantidad;
-    Button  btnSalir, btnFecha, btnEnviar;
+    Button  btnSalir, btnFecha, btnEnviar, btnCompartir;
     String dato;
     String key="",proveedor="",producto="",cantidad="",fecha="",timestamp="", accion="";
     Timestamp  tiempo;
@@ -91,19 +91,19 @@ public class Inicio extends AppCompatActivity {
     private void valor(){
         if(tvProveedor.getText().toString().equals("ANDRES")){
             if (comboProducto.getSelectedItem().toString().equals("HUESO")){
-                valor = 0.75;
-            }else if(comboProducto.getSelectedItem().toString().equals("MENUDO")){
                 valor = 0.5;
+            }else if(comboProducto.getSelectedItem().toString().equals("MENUDO")){
+                valor = 3;
             }else if(comboProducto.getSelectedItem().toString().equals("PELLEJO")){
-                valor = 0.7;
+                valor = 0.4;
             }
         }else if(tvProveedor.getText().toString().equals("NELSON")){
             if (comboProducto.getSelectedItem().toString().equals("HUESO")){
                 valor = 0.6;
             }else if(comboProducto.getSelectedItem().toString().equals("MENUDO")){
-                valor = 0.4;
+                valor = 3;
             }else if(comboProducto.getSelectedItem().toString().equals("PELLEJO")){
-                valor = 0.9;
+                valor = 0.5;
             }
         }
     }
@@ -125,6 +125,41 @@ public class Inicio extends AppCompatActivity {
         tvTimestamp.setText(timestamp);
     }
 
+
+    public void compartir(View v) {
+
+        if(tvProveedor.getText().toString().equals("") || comboProducto.getSelectedItem().toString().equals("SELECCIONE") || tvFecha.getText().toString().equals("") ||
+                tvTimestamp.getText().toString().equals("") || etCantidad.getText().toString().equals("")){
+            Toast.makeText(Inicio.this,
+                    "Por favor ingrese todos los campos necesarios.",Toast.LENGTH_SHORT).show();
+        }
+        else{
+            String proveedor = tvProveedor.getText().toString();
+            String producto = comboProducto.getSelectedItem().toString();
+            String cantidad = etCantidad.getText().toString();
+            String fecha = tvFecha.getText().toString();
+
+            if(tvProveedor.getText().toString().equals("ANDRES")) {
+                String date_s = fecha;
+                SimpleDateFormat dt = new SimpleDateFormat("yyyyy-MM-dd hh:mm:ss");
+                Date date = null;
+                try {
+                    date = dt.parse(date_s);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                SimpleDateFormat dt1 = new SimpleDateFormat("E dd/MMM/yy");
+
+                Intent compartir = new Intent(android.content.Intent.ACTION_SEND);
+                compartir.setType("text/plain");
+                String mensaje = "La cuenta de " + producto + " del día " + dt1.format(date) + " fue de " + cantidad + " lb.";
+                compartir.putExtra(android.content.Intent.EXTRA_SUBJECT, "Empleos Baja App");
+                compartir.putExtra(android.content.Intent.EXTRA_TEXT, mensaje);
+                startActivity(Intent.createChooser(compartir, "Compartir vía"));
+            }
+        }
+    }
+
     public void guardar(View v) {
 
         if(tvProveedor.getText().toString().equals("") || comboProducto.getSelectedItem().toString().equals("SELECCIONE") || tvFecha.getText().toString().equals("") ||
@@ -141,25 +176,6 @@ public class Inicio extends AppCompatActivity {
             String proveedor_timestamp = proveedor + "_" + timestamp;
             valor();
             String precio = String.format("%.2f",Double.parseDouble(cantidad) * valor);
-
-        // Se forma objeto Detalle
-            String date_s = fecha;
-            SimpleDateFormat dt = new SimpleDateFormat("yyyyy-MM-dd hh:mm:ss");
-            Date date = null;
-            try {
-                date = dt.parse(date_s);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            SimpleDateFormat dt1 = new SimpleDateFormat("E dd/MMM/yy");
-
-            Intent compartir = new Intent(android.content.Intent.ACTION_SEND);
-            compartir.setType("text/plain");
-            String mensaje = "La cuenta de "+ producto + " del día "+ dt1.format(date) + " fue de "+ cantidad+" lb.";
-            compartir.putExtra(android.content.Intent.EXTRA_SUBJECT, "Empleos Baja App");
-            compartir.putExtra(android.content.Intent.EXTRA_TEXT, mensaje);
-            startActivity(Intent.createChooser(compartir, "Compartir vía"));
-
 
         Pesa pesa = new Pesa(proveedor,producto,cantidad,fecha,timestamp,proveedor_timestamp,precio);
 
@@ -183,6 +199,7 @@ public class Inicio extends AppCompatActivity {
        tvFecha = findViewById(R.id.tv_fecha);
        tvTimestamp = findViewById(R.id.tv_timestamp);
        btnFecha = findViewById(R.id.btnfecha);
+       btnCompartir = findViewById(R.id.btncompartir);
        btnEnviar= findViewById(R.id.btnenviar);
        btnSalir = findViewById(R.id.btnsalir);
     }

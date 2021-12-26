@@ -147,6 +147,10 @@ public class Ventas extends AppCompatActivity {
 
                         AdaptadorPesa adapter = new AdaptadorPesa(Ventas.this,pesas);
                         listaDestinos.setAdapter(adapter);
+                        tvTotal.setText(String.valueOf(preciofinal));
+                        int tot = listaDestinos.getAdapter().getCount();
+                        Toast.makeText(Ventas.this,
+                                tot + " cuentas encontradas.",Toast.LENGTH_SHORT).show();
 
                         tvTotal.setText(String.valueOf(preciofinal));
 

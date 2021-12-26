@@ -109,11 +109,23 @@
             android:visibility="gone" />
 
         <Button
-            android:id="@+id/btnenviar"
+            android:id="@+id/btncompartir"
             android:layout_width="150dp"
             android:layout_height="40dp"
             android:layout_marginLeft="125dp"
             android:layout_marginTop="40dp"
+            android:layout_marginRight="125dp"
+            android:background="@drawable/btnradius"
+            android:onClick="compartir"
+            android:text="COMPARTIR"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/btnenviar"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="125dp"
+            android:layout_marginTop="25dp"
             android:layout_marginRight="125dp"
             android:background="@drawable/btnradius"
             android:onClick="guardar"
